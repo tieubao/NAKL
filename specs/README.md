@@ -44,6 +44,8 @@ Architectural decisions live in `/adr/`, not here. ADRs are write-once; supersed
 | [0008](0008-engine-test-suite.md) | Engine test suite | approved | @tieubao |
 | [0009](0009-imk-input-method.md) | IMK input method | draft (deferred) | @tieubao |
 | [0010](0010-notarisation.md) | Notarisation pipeline | draft (deferred) | @tieubao |
+| [0011](0011-login-item-migration.md) | SMAppService login-item migration | draft (follow-up) | @tieubao |
+| [0012](0012-asset-bundle-cleanup.md) | Bundle cleanup + EnableAssistiveDevices script | draft (follow-up) | @tieubao |
 
 ## Template
 
