@@ -37,7 +37,6 @@ KeyboardHandler *kbHandler;
 
 static char rk = 0;
 bool dirty;
-static bool frontmostAppApiCompatible = false;
 
 #pragma mark Initialization
 
@@ -47,20 +46,9 @@ static bool frontmostAppApiCompatible = false;
     NSMutableDictionary *appDefs = [NSMutableDictionary dictionary];
     [appDefs setObject:[NSNumber numberWithInt:1] forKey:NAKL_KEYBOARD_METHOD];
     [defaults registerDefaults:appDefs];
-    
-    if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7) {
-        frontmostAppApiCompatible = true;
-    }
-    
-    BOOL accessibilityEnabled = YES;
-    
-    if (AXIsProcessTrustedWithOptions != NULL) {
-        NSDictionary *options = @{(id) kAXTrustedCheckOptionPrompt: @NO};
-        accessibilityEnabled  = AXIsProcessTrustedWithOptions((CFDictionaryRef)options);
-    } else {
-        accessibilityEnabled = AXAPIEnabled();
-    }
-    
+
+    BOOL accessibilityEnabled = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(id)kAXTrustedCheckOptionPrompt: @NO});
+
     if (!accessibilityEnabled) {
         NSString* path = [[NSBundle mainBundle] pathForResource:@"EnableAssistiveDevices" ofType:@"scpt"];
         if (path != nil)
@@ -109,8 +97,7 @@ static bool frontmostAppApiCompatible = false;
     [super awakeFromNib];
     statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain];
     [statusItem setMenu:statusMenu];
-    [statusItem setAction:@selector(menuItemClicked)];
-    [statusItem setHighlightMode: YES];
+    statusItem.button.action = @selector(menuItemClicked);
     
     
     NSSize imageSize;
@@ -134,15 +121,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     UniChar chars[3];
     UniChar *x;
     long i;
-    NSString *activeAppBundleId;
-    
-    if (frontmostAppApiCompatible) {
-        NSRunningApplication *activeApp = [[NSWorkspace sharedWorkspace] frontmostApplication];
-        activeAppBundleId = [activeApp bundleIdentifier];
-    } else {
-        NSDictionary *activeApp = [[NSWorkspace sharedWorkspace] activeApplication];
-        activeAppBundleId = [activeApp objectForKey:@"NSApplicationBundleIdentifier"];
-    }
+    NSString *activeAppBundleId = [NSWorkspace sharedWorkspace].frontmostApplication.bundleIdentifier;
 
     uint64_t flag = CGEventGetFlags(event);
     
@@ -329,11 +308,11 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     switch (method) {
         case VKM_VNI:
         case VKM_TELEX:
-            [statusItem setImage:viStatusImage];
+            statusItem.button.image = viStatusImage;
             break;
-            
+
         default:
-            [statusItem setImage:enStatusImage];
+            statusItem.button.image = enStatusImage;
             break;
     }
 }
@@ -349,10 +328,10 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
 
 - (IBAction) methodSelected:(id)sender {
     for (id object in [statusMenu itemArray]) {
-        [(NSMenuItem*) object setState:NSOffState];
+        [(NSMenuItem*) object setState:NSControlStateValueOff];
     }
-    
-    [(NSMenuItem*) sender setState:NSOnState];
+
+    [(NSMenuItem*) sender setState:NSControlStateValueOn];
     
     int method;
     
