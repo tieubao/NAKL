@@ -97,16 +97,8 @@ bool dirty;
     statusItem.button.action = @selector(menuItemClicked);
     
     
-    NSSize imageSize;
-    imageSize.width = 16;
-    imageSize.height = 16;
-    
-    NSBundle *bundle = [NSBundle mainBundle];
-    viStatusImage = [[NSImage alloc] initWithContentsOfFile: [bundle pathForResource: @"icon24" ofType: @"png"]];
-    [viStatusImage setSize:imageSize];
-    
-    enStatusImage = [[NSImage alloc] initWithContentsOfFile: [bundle pathForResource: @"icon_blue_24" ofType: @"png"]];
-    [enStatusImage setSize:imageSize];
+    viStatusImage = [NSImage imageNamed:@"StatusBarVI"];
+    enStatusImage = [NSImage imageNamed:@"StatusBarEN"];
 }
 
 #pragma mark Keyboard Handler
