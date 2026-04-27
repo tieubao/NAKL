@@ -23,7 +23,7 @@
     IBOutlet NSTableView *tableView;
 }
 
-@property (readwrite,assign) NSMutableArray *list;
+@property (readwrite, strong) NSMutableArray *list;
 
 - (IBAction) add:(id)sender;
 - (IBAction) remove:(id)sender;

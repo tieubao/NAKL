@@ -18,7 +18,6 @@
 
 #import <Foundation/Foundation.h>
 #import "ShortcutRecorder/SRRecorderControl.h"
-#import "CWLSynthesizeSingleton.h"
 
 #define NAKL_HOTKEY_TOGGLE 10
 #define NAKL_HOTKEY_SWITCH_METHOD 20
@@ -29,23 +28,16 @@
 #define NAKL_SWITCH_METHOD_HOTKEY @"NAKLSwitchMethodHotKey"
 #define NAKL_EXCLUDED_APPS @"NAKLExcludedAppBundleIds"
 
-@interface AppData : NSObject {
-    NSUserDefaults *userPrefs;
-    KeyCombo toggleCombo;
-    KeyCombo switchMethodCombo;
-    NSMutableArray *shortcuts;
-    NSMutableDictionary *shortcutDictionary;
-    NSMutableDictionary *excludedApps;
-}
+@interface AppData : NSObject
 
-CWL_DECLARE_SINGLETON_FOR_CLASS(AppData)
++ (instancetype)sharedAppData;
 
-@property (readwrite,assign) NSUserDefaults *userPrefs;
-@property (readwrite,assign) KeyCombo toggleCombo;
-@property (readwrite,assign) KeyCombo switchMethodCombo;
-@property (readwrite,assign) NSMutableArray *shortcuts;
-@property (readwrite,assign) NSMutableDictionary *shortcutDictionary;
-@property (readwrite,assign) NSMutableDictionary *excludedApps;
+@property (readwrite, strong) NSUserDefaults *userPrefs;
+@property (readwrite, assign) KeyCombo toggleCombo;
+@property (readwrite, assign) KeyCombo switchMethodCombo;
+@property (readwrite, strong) NSMutableArray *shortcuts;
+@property (readwrite, strong) NSMutableDictionary *shortcutDictionary;
+@property (readwrite, strong) NSMutableDictionary *excludedApps;
 
 + (void) loadUserPrefs;
 + (void) loadHotKeys;

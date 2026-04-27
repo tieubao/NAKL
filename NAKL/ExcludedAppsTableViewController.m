@@ -78,10 +78,4 @@
     [[AppData sharedAppData].userPrefs setObject:[AppData sharedAppData].excludedApps forKey:NAKL_EXCLUDED_APPS];
 }
 
-- (void) dealloc
-{
-    [super dealloc];
-}
-
-
 @end
