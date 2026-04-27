@@ -24,15 +24,15 @@
 		5189A8DF1570CA5100327B99 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A8DE1570CA5100327B99 /* PreferencesController.m */; };
 		5189A8F41570CEE400327B99 /* ShortcutRecorder.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5189A8F21570CEE400327B99 /* ShortcutRecorder.strings */; };
 		5189A8F61570D81800327B99 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5189A8F51570D81800327B99 /* Carbon.framework */; };
-		5189A9061570ECB800327B99 /* SRCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A8FD1570ECB800327B99 /* SRCommon.m */; };
-		5189A9071570ECB800327B99 /* SRKeyCodeTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A8FF1570ECB800327B99 /* SRKeyCodeTransformer.m */; };
-		5189A9081570ECB800327B99 /* SRRecorderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A9011570ECB800327B99 /* SRRecorderCell.m */; };
-		5189A9091570ECB800327B99 /* SRRecorderControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A9031570ECB800327B99 /* SRRecorderControl.m */; };
-		5189A90A1570ECB800327B99 /* SRValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A9051570ECB800327B99 /* SRValidator.m */; };
-		5189A91415711B7F00327B99 /* PTHotKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A90D15711B7F00327B99 /* PTHotKey.m */; };
-		5189A91515711B7F00327B99 /* PTHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A90F15711B7F00327B99 /* PTHotKeyCenter.m */; };
-		5189A91615711B7F00327B99 /* PTKeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A91115711B7F00327B99 /* PTKeyCodeTranslator.m */; };
-		5189A91715711B7F00327B99 /* PTKeyCombo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A91315711B7F00327B99 /* PTKeyCombo.m */; };
+		5189A9061570ECB800327B99 /* SRCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A8FD1570ECB800327B99 /* SRCommon.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5189A9071570ECB800327B99 /* SRKeyCodeTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A8FF1570ECB800327B99 /* SRKeyCodeTransformer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5189A9081570ECB800327B99 /* SRRecorderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A9011570ECB800327B99 /* SRRecorderCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5189A9091570ECB800327B99 /* SRRecorderControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A9031570ECB800327B99 /* SRRecorderControl.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5189A90A1570ECB800327B99 /* SRValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A9051570ECB800327B99 /* SRValidator.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5189A91415711B7F00327B99 /* PTHotKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A90D15711B7F00327B99 /* PTHotKey.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5189A91515711B7F00327B99 /* PTHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A90F15711B7F00327B99 /* PTHotKeyCenter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5189A91615711B7F00327B99 /* PTKeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A91115711B7F00327B99 /* PTKeyCodeTranslator.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5189A91715711B7F00327B99 /* PTKeyCombo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A91315711B7F00327B99 /* PTKeyCombo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5189A9221571CC2200327B99 /* AppData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5189A9211571CC2200327B99 /* AppData.m */; };
 		519D090B1946B2E5000722E7 /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 519D090A1946B2E5000722E7 /* Images-2.xcassets */; };
 		51E7BA941589CB50003A6F3F /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51E7BA961589CB50003A6F3F /* Preferences.xib */; };
@@ -495,7 +495,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 40;
@@ -514,7 +514,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 40;

@@ -47,7 +47,7 @@ bool dirty;
     [appDefs setObject:[NSNumber numberWithInt:1] forKey:NAKL_KEYBOARD_METHOD];
     [defaults registerDefaults:appDefs];
 
-    BOOL accessibilityEnabled = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(id)kAXTrustedCheckOptionPrompt: @NO});
+    BOOL accessibilityEnabled = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge id)kAXTrustedCheckOptionPrompt: @NO});
 
     if (!accessibilityEnabled) {
         NSString* path = [[NSBundle mainBundle] pathForResource:@"EnableAssistiveDevices" ofType:@"scpt"];
@@ -61,9 +61,6 @@ bool dirty;
                 if (appleScript != nil)
                 {
                     [appleScript executeAndReturnError:nil];
-                    [appleScript release];
-                } else {
-                    
                 }
             }
         } else {
@@ -95,7 +92,7 @@ bool dirty;
 
 -(void)awakeFromNib {
     [super awakeFromNib];
-    statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain];
+    statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     [statusItem setMenu:statusMenu];
     statusItem.button.action = @selector(menuItemClicked);
     
@@ -146,7 +143,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
             break;
             
         case kCGEventTapDisabledByTimeout:
-            CGEventTapEnable(((AppDelegate*) refcon).eventTap , TRUE);
+            CGEventTapEnable(((__bridge AppDelegate *) refcon).eventTap , TRUE);
             break;
             
         case kCGEventKeyDown:
@@ -163,8 +160,8 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                         kbHandler.kbMethod = VKM_OFF;
                     }
                     
-                    [((AppDelegate*) refcon) updateCheckedItem];
-                    [((AppDelegate*) refcon) updateStatusItem];
+                    [((__bridge AppDelegate *) refcon) updateCheckedItem];
+                    [((__bridge AppDelegate *) refcon) updateStatusItem];
                     validShortcut = true;
                 }
                 
@@ -177,8 +174,8 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                     
                     if (kbHandler.kbMethod != VKM_OFF) {
                         [[AppData sharedAppData].userPrefs setValue:[NSNumber numberWithInt:kbHandler.kbMethod] forKey:NAKL_KEYBOARD_METHOD];
-                        [((AppDelegate*) refcon) updateCheckedItem];
-                        [((AppDelegate*) refcon) updateStatusItem];
+                        [((__bridge AppDelegate *) refcon) updateCheckedItem];
+                        [((__bridge AppDelegate *) refcon) updateStatusItem];
                     }
                     validShortcut = true;
                 }
@@ -282,7 +279,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                  );
     
     eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, 0,
-                                eventMask, KeyHandler, self);
+                                eventMask, KeyHandler, (__bridge void *)self);
     if (!eventTap) {
         fprintf(stderr, "failed to create event tap\n");
         exit(1);
@@ -364,11 +361,6 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     CFRunLoopRef rl = (CFRunLoopRef)CFRunLoopGetCurrent();
     CFRunLoopStop(rl);
     [NSApp terminate:self];
-}
-
-- (void)dealloc {
-    [preferencesController release];
-    [super dealloc];
 }
 
 @end
