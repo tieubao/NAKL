@@ -81,3 +81,4 @@ This spec is not directly testable; its acceptance criteria are met when the dep
 
 - 2026-04-27: drafted
 - 2026-04-27: approved (SPEC-0002 through SPEC-0008 drafted and approved; SPEC-0009 drafted at `draft`; ADR-0001 written)
+- 2026-04-27: Phase 9 added per SPEC-0015 (redistribution + UI v2). The "UI redesign" and "Switching language. Objective-C stays; no Swift mixing yet" non-goals listed above are formally retired by SPEC-0015. Phases 0-8 remain authoritative history; this entry is an amendment, not a supersession.

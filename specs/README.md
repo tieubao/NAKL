@@ -48,6 +48,12 @@ Architectural decisions live in `/adr/`, not here. ADRs are write-once; supersed
 | [0012](0012-asset-bundle-cleanup.md) | Bundle cleanup + EnableAssistiveDevices script | approved | @tieubao |
 | [0013](0013-status-item-main-thread.md) | Status-item main-thread dispatch | approved | @tieubao |
 | [0014](0014-applescript-qos-inversion.md) | AppleScript launch QoS inversion fix | approved | @tieubao |
+| [0015](0015-redistribution-ui-v2-roadmap.md) | Phase 9 roadmap: redistribution + UI v2 | done | @tieubao |
+| [0016](0016-product-rebrand.md) | Product rebrand (Monke, foundation.d.Monke) | done | @tieubao |
+| [0017](0017-swiftui-shell.md) | SwiftUI Preferences shell + macOS 14 deployment | done | @tieubao |
+| [0018](0018-localization-vi-en.md) | Full vi/en localisation via String Catalog | done | @tieubao |
+| [0019](0019-menubarextra-rewrite.md) | MenuBarExtra rewrite (retire main.m + AppDelegate + MainMenu.xib) | draft | @tieubao |
+| [0020](0020-keyboardshortcuts-spm-swap.md) | KeyboardShortcuts SPM swap (retire vendored ShortcutRecorder + PTHotKey) | draft | @tieubao |
 
 ## Template
 

@@ -18,11 +18,11 @@
 
 #import <Security/Security.h>
 #import "AppDelegate.h"
+#import "Monke-Swift.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize preferencesController;
 @synthesize eventTap;
 
 uint64_t controlKeys = kCGEventFlagMaskCommand | kCGEventFlagMaskAlternate | kCGEventFlagMaskControl | kCGEventFlagMaskSecondaryFn | kCGEventFlagMaskHelp;
@@ -51,12 +51,12 @@ bool dirty;
 
     if (!accessibilityEnabled) {
         NSAlert *alert = [[NSAlert alloc] init];
-        alert.messageText = @"NAKL";
-        alert.informativeText =
-            @"NAKL không thể hoạt động nếu chưa được cấp quyền điều khiển bàn phím. "
-            @"Bạn cần phải kích hoạt bằng cách mở System Settings > Privacy & Security > "
-            @"Accessibility và đánh dấu vào NAKL.\n\n"
-            @"Sau khi kích hoạt, bạn cần phải tắt và mở lại NAKL.";
+        alert.messageText = NSLocalizedString(
+            @"Monke needs Accessibility permission",
+            @"AX-prompt title shown when Monke launches without keyboard-control permission.");
+        alert.informativeText = NSLocalizedString(
+            @"Monke cannot work without keyboard-control permission. Open System Settings > Privacy & Security > Accessibility and tick Monke.\n\nAfter enabling, quit and reopen Monke.",
+            @"AX-prompt body shown when Monke launches without keyboard-control permission.");
         [alert runModal];
 
         [[NSWorkspace sharedWorkspace] openURL:
@@ -66,8 +66,8 @@ bool dirty;
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
-    preferencesController = [[PreferencesController alloc] init];
-    
+    [AppData migrateLegacyDataIfNeeded];
+
     [AppData loadUserPrefs];
     [AppData loadHotKeys];
     [AppData loadShortcuts];
@@ -304,12 +304,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
 }
 
 -(IBAction)showPreferences:(id)sender{
-    if(!self.preferencesController)
-        self.preferencesController = [[PreferencesController alloc] initWithWindowNibName:@"Preferences"];
-    
-    [NSApp activateIgnoringOtherApps:YES];
-    [self.preferencesController showWindow:self];
-    [self.preferencesController.window center];
+    [[PreferencesWindowController shared] presentFromMenu:sender];
 }
 
 - (IBAction) methodSelected:(id)sender {

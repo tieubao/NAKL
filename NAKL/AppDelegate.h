@@ -19,7 +19,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import "ShortcutRecorder/SRRecorderControl.h"
-#import "PreferencesController.h"
 #import "KeyboardHandler.h"
 #import "PTHotKey.h"
 #import "AppData.h"
@@ -32,7 +31,6 @@ typedef enum {
 } NAKL_METHOD;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
-    PreferencesController *preferencesController;
     __weak NSWindow *_window;
     IBOutlet NSMenu *statusMenu;
     NSStatusItem * statusItem;
@@ -51,6 +49,5 @@ typedef enum {
 
 @property (weak) IBOutlet NSWindow *window;
 @property (assign) CFMachPortRef eventTap;
-@property (strong) PreferencesController *preferencesController;
 
 @end

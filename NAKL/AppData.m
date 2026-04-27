@@ -17,9 +17,14 @@
  ******************************************************************************/
 
 #import "AppData.h"
+#import <AppKit/AppKit.h>
 #import "PTHotKey.h"
 #import "NSFileManager+DirectoryLocations.h"
 #import "ShortcutSetting.h"
+
+static NSString * const kNAKLMigrationFromZepvnCompleteKey = @"NAKLMigrationFromZepvnComplete";
+static NSString * const kLegacyDefaultsSuite = @"com.zepvn.NAKL";
+static NSString * const kLegacyAppSupportDir = @"Library/Application Support/NAKL";
 
 @implementation AppData
 
@@ -87,6 +92,62 @@
     if (excludedApps != nil) {
         [[AppData sharedAppData].excludedApps setDictionary:excludedApps];
     }
+}
+
++ (void) migrateLegacyDataIfNeeded
+{
+    NSUserDefaults *current = [NSUserDefaults standardUserDefaults];
+    if ([current boolForKey:kNAKLMigrationFromZepvnCompleteKey]) return;
+
+    NSUserDefaults *legacy = [[NSUserDefaults alloc]
+                              initWithSuiteName:kLegacyDefaultsSuite];
+
+    BOOL legacyHasData = ([legacy objectForKey:NAKL_KEYBOARD_METHOD] != nil);
+    BOOL currentIsEmpty = ([current objectForKey:NAKL_KEYBOARD_METHOD] == nil);
+
+    if (legacyHasData && currentIsEmpty) {
+        NSArray<NSString *> *keys = @[NAKL_KEYBOARD_METHOD,
+                                      NAKL_LOAD_AT_LOGIN,
+                                      NAKL_TOGGLE_HOTKEY,
+                                      NAKL_SWITCH_METHOD_HOTKEY,
+                                      NAKL_EXCLUDED_APPS];
+        for (NSString *key in keys) {
+            id value = [legacy objectForKey:key];
+            if (value != nil) {
+                [current setObject:value forKey:key];
+            }
+        }
+
+        if ([legacy boolForKey:NAKL_LOAD_AT_LOGIN]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSAlert *alert = [[NSAlert alloc] init];
+                alert.messageText = NSLocalizedString(
+                    @"Re-enable Load at Login",
+                    @"Migration prompt title shown after rebrand from NAKL to Monke when the user previously had load-at-login enabled.");
+                alert.informativeText = NSLocalizedString(
+                    @"Monke was previously installed under a different identity. macOS treats the renamed app as a separate background item, so open Preferences and toggle Load at Login once more to keep it starting at boot.",
+                    @"Migration prompt body explaining why load-at-login does not transfer across bundle-ID renames.");
+                [alert addButtonWithTitle:@"OK"];
+                [alert runModal];
+            });
+        }
+    }
+
+    NSFileManager *fm = NSFileManager.defaultManager;
+    NSString *legacyPath = [NSHomeDirectory()
+        stringByAppendingPathComponent:
+            [kLegacyAppSupportDir stringByAppendingPathComponent:@"shortcuts.setting"]];
+    NSString *newDir = [fm applicationSupportDirectory];
+    NSString *newPath = [newDir stringByAppendingPathComponent:@"shortcuts.setting"];
+    if ([fm fileExistsAtPath:legacyPath] && ![fm fileExistsAtPath:newPath]) {
+        NSError *copyError = nil;
+        [fm copyItemAtPath:legacyPath toPath:newPath error:&copyError];
+        if (copyError) {
+            NSLog(@"[Monke] shortcut migration failed: %@", copyError);
+        }
+    }
+
+    [current setBool:YES forKey:kNAKLMigrationFromZepvnCompleteKey];
 }
 
 @end

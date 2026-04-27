@@ -1,0 +1,5 @@
+/* Localized version of CFBundleDisplayName shown by Finder, Spotlight,
+   and the macOS Dock when the user's preferred languages list places vi
+   ahead of en. Brand name "Monke" is kept untranslated. */
+"CFBundleDisplayName" = "Monke";
+"CFBundleName" = "Monke";

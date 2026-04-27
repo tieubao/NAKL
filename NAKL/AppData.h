@@ -43,5 +43,6 @@
 + (void) loadHotKeys;
 + (void) loadShortcuts;
 + (void) loadExcludedApps;
++ (void) migrateLegacyDataIfNeeded;
 
 @end

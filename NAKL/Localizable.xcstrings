@@ -1,0 +1,220 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Monke needs Accessibility permission" : {
+      "comment" : "AX-prompt title shown when Monke launches without keyboard-control permission.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Monke needs Accessibility permission" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Monke cần quyền Trợ năng" } }
+      }
+    },
+    "Monke cannot work without keyboard-control permission. Open System Settings > Privacy & Security > Accessibility and tick Monke.\n\nAfter enabling, quit and reopen Monke." : {
+      "comment" : "AX-prompt body shown when Monke launches without keyboard-control permission.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Monke cannot work without keyboard-control permission. Open System Settings > Privacy & Security > Accessibility and tick Monke.\n\nAfter enabling, quit and reopen Monke." } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Monke không thể hoạt động nếu chưa được cấp quyền điều khiển bàn phím. Bạn cần phải kích hoạt bằng cách mở System Settings > Privacy & Security > Accessibility và đánh dấu vào Monke.\n\nSau khi kích hoạt, bạn cần phải tắt và mở lại Monke." } }
+      }
+    },
+    "Re-enable Load at Login" : {
+      "comment" : "Migration prompt title shown after rebrand from NAKL to Monke when the user previously had load-at-login enabled.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Re-enable Load at Login" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Bật lại Tự khởi động khi đăng nhập" } }
+      }
+    },
+    "Monke was previously installed under a different identity. macOS treats the renamed app as a separate background item, so open Preferences and toggle Load at Login once more to keep it starting at boot." : {
+      "comment" : "Migration prompt body explaining why load-at-login does not transfer across bundle-ID renames.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Monke was previously installed under a different identity. macOS treats the renamed app as a separate background item, so open Preferences and toggle Load at Login once more to keep it starting at boot." } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Monke trước đây được cài đặt dưới một định danh khác. macOS coi ứng dụng đã đổi tên là một mục nền riêng biệt, vì vậy hãy mở Tùy chọn và bật lại Tự khởi động khi đăng nhập để giữ Monke khởi động cùng máy." } }
+      }
+    },
+    "About" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "About" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Giới thiệu" } }
+      }
+    },
+    "Add" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Thêm" } }
+      }
+    },
+    "Add app…" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add app…" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Thêm ứng dụng…" } }
+      }
+    },
+    "Application" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Application" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ứng dụng" } }
+      }
+    },
+    "Appearance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Appearance" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Giao diện" } }
+      }
+    },
+    "Bundle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Bundle" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Định danh" } }
+      }
+    },
+    "Bundle ID" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Bundle ID" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Mã ứng dụng" } }
+      }
+    },
+    "Click a field, then press the desired key combination. Changes apply on next app launch." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Click a field, then press the desired key combination. Changes apply on next app launch." } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Nhấn vào ô rồi bấm tổ hợp phím mong muốn. Thay đổi có hiệu lực sau khi khởi động lại Monke." } }
+      }
+    },
+    "Delete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Xóa" } }
+      }
+    },
+    "Excluded Apps" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Excluded Apps" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Loại trừ" } }
+      }
+    },
+    "Expansion" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Expansion" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Mở rộng" } }
+      }
+    },
+    "expansion" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "expansion" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "mở rộng" } }
+      }
+    },
+    "General" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "General" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Chung" } }
+      }
+    },
+    "Hotkeys" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Hotkeys" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Phím tắt" } }
+      }
+    },
+    "Language" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Language" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Ngôn ngữ" } }
+      }
+    },
+    "Load Monke when I log in" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Load Monke when I log in" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Tự khởi động Monke khi đăng nhập" } }
+      }
+    },
+    "Monke Preferences" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Monke Preferences" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Tùy chọn Monke" } }
+      }
+    },
+    "Remove" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Remove" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Xóa" } }
+      }
+    },
+    "Shortcut" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Shortcut" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Gõ tắt" } }
+      }
+    },
+    "shortcut" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "shortcut" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "gõ tắt" } }
+      }
+    },
+    "Shortcuts" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Shortcuts" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Gõ tắt" } }
+      }
+    },
+    "Startup" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Startup" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Khởi động" } }
+      }
+    },
+    "Switch VNI ↔ Telex" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Switch VNI ↔ Telex" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Đổi VNI ↔ Telex" } }
+      }
+    },
+    "System" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "System" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Hệ thống" } }
+      }
+    },
+    "Toggle on / off" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Toggle on / off" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Bật / tắt" } }
+      }
+    },
+    "Version" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Version" } },
+        "vi" : { "stringUnit" : { "state" : "translated", "value" : "Phiên bản" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}
