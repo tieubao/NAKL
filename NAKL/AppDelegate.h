@@ -32,14 +32,14 @@ typedef enum {
 } NAKL_METHOD;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
-    PreferencesController *preferencesController; 
-    NSWindow *_window;
+    PreferencesController *preferencesController;
+    __weak NSWindow *_window;
     IBOutlet NSMenu *statusMenu;
-    NSStatusItem * statusItem;    
+    NSStatusItem * statusItem;
     NSImage *viStatusImage;
-    NSImage *enStatusImage;    
-    NSImage *statusHighlightImage;   
-    CFMachPortRef      eventTap;    
+    NSImage *enStatusImage;
+    NSImage *statusHighlightImage;
+    CFMachPortRef      eventTap;
 }
 
 + (void)initialize;
@@ -49,8 +49,8 @@ typedef enum {
 - (void) updateStatusItem;
 - (void) updateCheckedItem;
 
-@property (assign) IBOutlet NSWindow *window;
-@property (assign) CFMachPortRef eventTap;    
-@property (retain) PreferencesController *preferencesController;
+@property (weak) IBOutlet NSWindow *window;
+@property (assign) CFMachPortRef eventTap;
+@property (strong) PreferencesController *preferencesController;
 
 @end

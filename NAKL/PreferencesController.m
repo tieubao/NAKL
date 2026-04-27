@@ -21,6 +21,7 @@
 #import "PTHotKeyCenter.h"
 #import "PTHotKey.h"
 #import "NSFileManager+DirectoryLocations.h"
+#import <ServiceManagement/SMAppService.h>
 
 @implementation PreferencesController
 
@@ -45,8 +46,15 @@
     [super windowDidLoad];
     [self.toggleHotKey setKeyCombo: [AppData sharedAppData].toggleCombo];
     [self.switchMethodHotKey setKeyCombo: [AppData sharedAppData].switchMethodCombo];
-    
+
     [self.shortcuts setContent:[AppData sharedAppData].shortcuts];
+
+    // Sync the Cocoa-bound `startAtLogin` user-defaults key with system reality.
+    // The checkbox is bound to values.startAtLogin (see Preferences.xib); without
+    // this seeding it would show whatever was last persisted, not what SMAppService
+    // actually reports.
+    BOOL enabled = ([SMAppService mainAppService].status == SMAppServiceStatusEnabled);
+    [[NSUserDefaults standardUserDefaults] setBool:enabled forKey:@"startAtLogin"];
 }
 
 - (void)windowWillClose :(NSNotification *)notification
@@ -71,78 +79,59 @@
     }
 }
 
-- (void) addAppsAsLoginItem
-{
-    NSString * appPath = [[NSBundle mainBundle] bundlePath];
-    
-    CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:appPath];
-    
-    LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL,
-                                                            kLSSharedFileListSessionLoginItems, NULL);
-    if (loginItems) {
-        //Insert an item to the list.
-        LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems,
-                                                                     kLSSharedFileListItemLast, NULL, NULL,
-                                                                     url, NULL, NULL);
-        if (item){
-            CFRelease(item);
-        }
-    }
-    
-    CFRelease(loginItems);
-}
-
--(void) removeAppFromLoginItem
-{
-    NSString * appPath = [[NSBundle mainBundle] bundlePath];
-    
-    CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:appPath];
-    
-    LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL,
-                                                            kLSSharedFileListSessionLoginItems, NULL);
-    
-    if (loginItems) {
-        UInt32 seedValue;
-        NSArray  *loginItemsArray = (NSArray *)LSSharedFileListCopySnapshot(loginItems, &seedValue);
-        int i = 0;
-        for( ; i< [loginItemsArray count]; i++){
-            LSSharedFileListItemRef itemRef = (LSSharedFileListItemRef)[loginItemsArray
-                                                                        objectAtIndex:i];
-            if (LSSharedFileListItemResolve(itemRef, 0, (CFURLRef*) &url, NULL) == noErr) {
-                NSString * urlPath = [(NSURL*)url path];
-                if ([urlPath compare:appPath] == NSOrderedSame){
-                    LSSharedFileListItemRemove(loginItems,itemRef);
-                }
-            }
-        }
-        [loginItemsArray release];
-    }
-}
-
 - (IBAction) startupOptionClick:(id)sender
 {
-    if (((NSButton*) sender).state == NSOnState) {
-        [self addAppsAsLoginItem];
-    } else {
-        [self removeAppFromLoginItem];
-    }
+    NSButton *button = (NSButton *)sender;
+    BOOL wantEnabled = (button.state == NSControlStateValueOn);
+    SMAppService *service = [SMAppService mainAppService];
+    NSError *err = nil;
+    BOOL ok = wantEnabled
+        ? [service registerAndReturnError:&err]
+        : [service unregisterAndReturnError:&err];
+
+    if (ok) return;
+
+    // Failure path: revert the bound user-defaults value (the binding flips
+    // the checkbox back) and tell the user why. Common failure: user denied
+    // the macOS background-item prompt.
+    [[NSUserDefaults standardUserDefaults] setBool:!wantEnabled forKey:@"startAtLogin"];
+
+    NSAlert *alert = [[NSAlert alloc] init];
+    alert.messageText = wantEnabled
+        ? NSLocalizedString(@"Could not enable Load at Login", nil)
+        : NSLocalizedString(@"Could not disable Load at Login", nil);
+    alert.informativeText = err.localizedDescription ?: @"Unknown error";
+    [alert runModal];
 }
 
 - (void) saveSetting
 {
     NSString *filePath = [[[NSFileManager defaultManager] applicationSupportDirectory] stringByAppendingPathComponent:@"shortcuts.setting"];
-    NSData *theData = [NSKeyedArchiver archivedDataWithRootObject:[AppData sharedAppData].shortcuts];
-    [NSKeyedArchiver archiveRootObject:theData toFile:filePath];
-    
+
+    // Preserve the historical nested-archive wire format that AppData.loadShortcuts
+    // expects: outer archive whose root is an NSData containing an inner archive
+    // of the shortcuts NSMutableArray. requiringSecureCoding:NO matches the load
+    // side; promoting to YES would force ShortcutSetting to adopt NSSecureCoding.
+    NSError *err = nil;
+    NSData *innerData = [NSKeyedArchiver archivedDataWithRootObject:[AppData sharedAppData].shortcuts
+                                              requiringSecureCoding:NO
+                                                              error:&err];
+    NSData *outerData = innerData ? [NSKeyedArchiver archivedDataWithRootObject:innerData
+                                                          requiringSecureCoding:NO
+                                                                          error:&err] : nil;
+    if (outerData) {
+        [outerData writeToURL:[NSURL fileURLWithPath:filePath]
+                      options:NSDataWritingAtomic
+                        error:&err];
+    }
+    if (err) {
+        NSLog(@"NAKL: failed to save shortcuts.setting: %@", err);
+    }
+
     [[AppData sharedAppData].shortcutDictionary removeAllObjects];
     for (ShortcutSetting *s in [AppData sharedAppData].shortcuts) {
         [[AppData sharedAppData].shortcutDictionary setObject:s.text forKey:s.shortcut];
     }
-}
-
-- (void) dealloc {
-    [shortcutsTableView release];
-    [super dealloc];
 }
 
 @end

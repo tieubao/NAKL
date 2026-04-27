@@ -1,0 +1,16 @@
+# SPEC-0008: Passthrough (NAKL_OFF) corpus
+# Format: input<TAB>expected
+# When method == NAKL_OFF, every input character must pass through verbatim;
+# expected always equals input. Tests the engine's bypass path.
+hello world	hello world
+the quick brown fox	the quick brown fox
+tieengs	tieengs
+xin chaof	xin chaof
+cam ownf	cam ownf
+plain ASCII	plain ASCII
+1234567890	1234567890
+!@#$%^&*()	!@#$%^&*()
+shortcut keys	shortcut keys
+no transformation here	no transformation here
+abcdefghijklmnopqrstuvwxyz	abcdefghijklmnopqrstuvwxyz
+ABCDEFGHIJKLMNOPQRSTUVWXYZ	ABCDEFGHIJKLMNOPQRSTUVWXYZ

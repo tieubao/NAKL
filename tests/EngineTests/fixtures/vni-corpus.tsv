@@ -1,0 +1,88 @@
+# SPEC-0008: VNI golden corpus
+# Format: input<TAB>expected[<TAB>note]
+# Lines starting with # are comments. Empty lines ignored.
+# Note containing 'known-divergence:' excludes that case from the pass-rate denominator.
+# Expected outputs were derived from the engine itself (golden-master).
+
+a1	á
+a2	à
+a3	ả
+a4	ã
+a5	ạ
+a6	â
+a7	a7
+a8	ă
+d9	đ
+a61	ấ
+a62	ầ
+a63	ẩ
+a64	ẫ
+a65	ậ
+a81	ắ
+a82	ằ
+a83	ẳ
+a84	ẵ
+a85	ặ
+e1	é
+e2	è
+e3	ẻ
+e4	ẽ
+e5	ẹ
+e6	ê
+e61	ế
+e62	ề
+e63	ể
+e64	ễ
+e65	ệ
+o1	ó
+o2	ò
+o3	ỏ
+o4	õ
+o5	ọ
+o6	ô
+o7	ơ
+o61	ố
+o62	ồ
+o63	ổ
+o64	ỗ
+o65	ộ
+o71	ớ
+o72	ờ
+o73	ở
+o74	ỡ
+o75	ợ
+u1	ú
+u2	ù
+u3	ủ
+u4	ũ
+u5	ụ
+u7	ư
+u71	ứ
+u72	ừ
+u73	ử
+u74	ữ
+u75	ự
+tie61ng vie65t	tiếng việt
+d9o62ng la2	đồng là
+xin chao2	xin chào
+cam o7n	cam ơn
+c8m o7n	c8m ơn
+hoi5 cho75	họi chợ
+saig2on	saig2on
+sai2 go2n	sài gòn
+ha2 no65i	hà nội
+hue61	huế
+d9a2 na85ng	đà nặng
+tha1i nguye6n	thái nguyên
+bin2h thua65n	bình thuận
+cu7 d9o6i	cư đôi
+tie6ng anh	tiêng anh
+chu1c mu72ng	chúc mừng
+mua xua6n	mua xuân
+d9a6t nu7o71c	đât nước
+d9o63ng tha1p	đổng tháp
+hai pho2ng	hai phòng
+bie6n ho2a	biên hòa
+mo7 ma2ng	mơ màng
+t8m ho6n	t8m hôn
+c8n nha2	c8n nhà

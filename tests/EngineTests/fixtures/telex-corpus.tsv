@@ -1,0 +1,213 @@
+# SPEC-0008: Telex golden corpus
+# Format: input<TAB>expected[<TAB>note]
+# Lines starting with # are comments. Empty lines ignored.
+# Note containing 'known-divergence:' excludes that case from the pass-rate denominator.
+# Expected outputs were derived from the engine itself (golden-master) and
+# spot-checked for plausible Vietnamese; they describe what the legacy
+# CGEventTap pipeline produced before SPEC-0007 (line-for-line port).
+
+a	a
+aa	â
+aw	ă
+d	d
+dd	đ
+e	e
+ee	ê
+o	o
+oo	ô
+ow	ơ
+u	u
+uw	ư
+as	á
+af	à
+ar	ả
+ax	ã
+aj	ạ
+ees	ế
+eef	ề
+eer	ể
+eex	ễ
+eej	ệ
+oos	ố
+oof	ồ
+oor	ổ
+oox	ỗ
+ooj	ộ
+ows	ớ
+owf	ờ
+owr	ở
+owx	ỡ
+owj	ợ
+uws	ứ
+uwf	ừ
+uwr	ử
+uwx	ữ
+uwj	ự
+tieengs	tiếng
+tieesngs	tiêngs
+khoong	không
+xin chaof	xin chào
+xin chao	xin chao
+cam own	cam ơn
+camw own	căm ơn
+cuwr ddooi	cử đôi
+hochiminh	hochiminh
+hocchiminh	hocchiminh
+saif gonf	sài gòn
+saif gon	sài gon
+hanooij	hanooij
+huees	huế
+dda nawngj	đa nặng
+hoaif phongs	hoài phóng
+thai bins	thai bín
+naam ddinhj	nâm định
+thais nguyeen	thái nguyên
+tuyeen quang	tuyên quang
+bawcs ninh	bắc ninh
+hwowngs vif	hwowngs vì
+bawnsr	bẳn
+khof khawn	khò khăn
+dduwowngf	đường
+mowf	mờ
+mof	mò
+mos	mó
+mor	mỏ
+mox	mõ
+moj	mọ
+mow	mơ
+moow	mơ
+moos	mố
+moofj	mộ
+cuoois	cuối
+tuoir	tuỏi
+suois	suói
+chuoois	chuối
+chuooij	chuội
+ruwowuj	rượu
+ruwowi	rươi
+ruwowu	rươu
+tuwowif	tười
+tuwowng	tương
+suwowng	sương
+xuwowng	xương
+hoaij	hoại
+tooij	tội
+noois	nối
+thooij	thội
+muonsj	muọn
+muoonj	muộn
+muoons	muốn
+muooonr	muoonr
+guowis	guới
+suogns	suogns
+tooots	toots
+cooong	coong
+dduowngf	đuờng
+heeej	heej
+hees	hế
+heef	hề
+heer	hể
+heex	hễ
+taij	tại
+tair	tải
+tais	tái
+taif	tài
+tax	tã
+thais	thái
+loaif	loài
+loaij	loại
+loais	loái
+loaix	loãi
+loair	loải
+bais	bái
+bair	bải
+baif	bài
+baix	bãi
+baij	bại
+cais	cái
+cair	cải
+caif	cài
+caix	cãi
+caij	cại
+dais	dái
+dair	dải
+daif	dài
+daix	dãi
+daij	dại
+dais	dái
+hai	hai
+bai	bai
+cai	cai
+gai	gai
+mai	mai
+pai	pai
+tai	tai
+hoa	hoa
+bua	bua
+cua	cua
+gua	gua
+mua	mua
+tua	tua
+puua	puua
+tia	tia
+cia	cia
+mia	mia
+via	via
+xia	xia
+thuyf	thuỳ
+thuyx	thuỹ
+thuys	thuý
+thuyr	thuỷ
+thuyj	thuỵ
+chuyenr	chuyẻn
+chuyenj	chuyẹn
+chuyens	chuyén
+chuyenx	chuyẽn
+chuyenf	chuyèn
+nhuyens	nhuyén
+nhuyensj	nhuyẹn
+dduwowng	đương
+hoongs	hống
+chongd	chongd
+bongr	bỏng
+bongj	bọng
+bongs	bóng
+bongx	bõng
+bongf	bòng
+cangs	cáng
+cangf	càng
+cangr	cảng
+cangx	cãng
+cangj	cạng
+mangs	máng
+mangf	màng
+mangr	mảng
+mangx	mãng
+mangj	mạng
+rangs	ráng
+rangf	ràng
+rangr	rảng
+rangx	rãng
+rangj	rạng
+khoaif	khoài
+khoair	khoải
+khoais	khoái
+khoaix	khoãi
+khoaij	khoại
+tien	tien
+tiens	tién
+tienf	tièn
+tienr	tiẻn
+tienx	tiẽn
+tienj	tiẹn
+muonr	muỏn
+muons	muón
+muonf	muòn
+muonx	muõn
+muonj	muọn
+tron	tron
+trons	trón
+tronf	tròn
+tronr	trỏn
+tronx	trõn
+tronj	trọn

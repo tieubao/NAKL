@@ -37,7 +37,6 @@ KeyboardHandler *kbHandler;
 
 static char rk = 0;
 bool dirty;
-static bool frontmostAppApiCompatible = false;
 
 #pragma mark Initialization
 
@@ -47,40 +46,21 @@ static bool frontmostAppApiCompatible = false;
     NSMutableDictionary *appDefs = [NSMutableDictionary dictionary];
     [appDefs setObject:[NSNumber numberWithInt:1] forKey:NAKL_KEYBOARD_METHOD];
     [defaults registerDefaults:appDefs];
-    
-    if (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7) {
-        frontmostAppApiCompatible = true;
-    }
-    
-    BOOL accessibilityEnabled = YES;
-    
-    if (AXIsProcessTrustedWithOptions != NULL) {
-        NSDictionary *options = @{(id) kAXTrustedCheckOptionPrompt: @NO};
-        accessibilityEnabled  = AXIsProcessTrustedWithOptions((CFDictionaryRef)options);
-    } else {
-        accessibilityEnabled = AXAPIEnabled();
-    }
-    
+
+    BOOL accessibilityEnabled = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge id)kAXTrustedCheckOptionPrompt: @NO});
+
     if (!accessibilityEnabled) {
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"EnableAssistiveDevices" ofType:@"scpt"];
-        if (path != nil)
-        {
-            NSURL* url = [NSURL fileURLWithPath:path];
-            if (url != nil)
-            {
-                NSDictionary* errors       = [NSDictionary dictionary];
-                NSAppleScript* appleScript = [[NSAppleScript alloc] initWithContentsOfURL:url error:&errors];
-                if (appleScript != nil)
-                {
-                    [appleScript executeAndReturnError:nil];
-                    [appleScript release];
-                } else {
-                    
-                }
-            }
-        } else {
-            NSLog(@"Can't find EnableAssistiveDevices.scpt script");
-        }
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"NAKL";
+        alert.informativeText =
+            @"NAKL không thể hoạt động nếu chưa được cấp quyền điều khiển bàn phím. "
+            @"Bạn cần phải kích hoạt bằng cách mở System Settings > Privacy & Security > "
+            @"Accessibility và đánh dấu vào NAKL.\n\n"
+            @"Sau khi kích hoạt, bạn cần phải tắt và mở lại NAKL.";
+        [alert runModal];
+
+        [[NSWorkspace sharedWorkspace] openURL:
+            [NSURL URLWithString:@"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"]];
     }
 }
 
@@ -107,22 +87,13 @@ static bool frontmostAppApiCompatible = false;
 
 -(void)awakeFromNib {
     [super awakeFromNib];
-    statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain];
+    statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     [statusItem setMenu:statusMenu];
-    [statusItem setAction:@selector(menuItemClicked)];
-    [statusItem setHighlightMode: YES];
+    statusItem.button.action = @selector(menuItemClicked);
     
     
-    NSSize imageSize;
-    imageSize.width = 16;
-    imageSize.height = 16;
-    
-    NSBundle *bundle = [NSBundle mainBundle];
-    viStatusImage = [[NSImage alloc] initWithContentsOfFile: [bundle pathForResource: @"icon24" ofType: @"png"]];
-    [viStatusImage setSize:imageSize];
-    
-    enStatusImage = [[NSImage alloc] initWithContentsOfFile: [bundle pathForResource: @"icon_blue_24" ofType: @"png"]];
-    [enStatusImage setSize:imageSize];
+    viStatusImage = [NSImage imageNamed:@"StatusBarVI"];
+    enStatusImage = [NSImage imageNamed:@"StatusBarEN"];
 }
 
 #pragma mark Keyboard Handler
@@ -132,17 +103,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     UniCharCount actualStringLength;
     UniCharCount maxStringLength = 1;
     UniChar chars[3];
-    UniChar *x;
-    long i;
-    NSString *activeAppBundleId;
-    
-    if (frontmostAppApiCompatible) {
-        NSRunningApplication *activeApp = [[NSWorkspace sharedWorkspace] frontmostApplication];
-        activeAppBundleId = [activeApp bundleIdentifier];
-    } else {
-        NSDictionary *activeApp = [[NSWorkspace sharedWorkspace] activeApplication];
-        activeAppBundleId = [activeApp objectForKey:@"NSApplicationBundleIdentifier"];
-    }
+    NSString *activeAppBundleId = [NSWorkspace sharedWorkspace].frontmostApplication.bundleIdentifier;
 
     uint64_t flag = CGEventGetFlags(event);
     
@@ -167,7 +128,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
             break;
             
         case kCGEventTapDisabledByTimeout:
-            CGEventTapEnable(((AppDelegate*) refcon).eventTap , TRUE);
+            CGEventTapEnable(((__bridge AppDelegate *) refcon).eventTap , TRUE);
             break;
             
         case kCGEventKeyDown:
@@ -184,11 +145,14 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                         kbHandler.kbMethod = VKM_OFF;
                     }
                     
-                    [((AppDelegate*) refcon) updateCheckedItem];
-                    [((AppDelegate*) refcon) updateStatusItem];
+                    AppDelegate *appDelegate = (__bridge AppDelegate *) refcon;
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [appDelegate updateCheckedItem];
+                        [appDelegate updateStatusItem];
+                    });
                     validShortcut = true;
                 }
-                
+
                 if (((flag & controlKeys) == [AppData sharedAppData].switchMethodCombo.flags) && (keycode == [AppData sharedAppData].switchMethodCombo.code) ){
                     if (kbHandler.kbMethod == VKM_VNI) {
                         kbHandler.kbMethod = VKM_TELEX;
@@ -198,8 +162,11 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                     
                     if (kbHandler.kbMethod != VKM_OFF) {
                         [[AppData sharedAppData].userPrefs setValue:[NSNumber numberWithInt:kbHandler.kbMethod] forKey:NAKL_KEYBOARD_METHOD];
-                        [((AppDelegate*) refcon) updateCheckedItem];
-                        [((AppDelegate*) refcon) updateStatusItem];
+                        AppDelegate *appDelegate = (__bridge AppDelegate *) refcon;
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [appDelegate updateCheckedItem];
+                            [appDelegate updateStatusItem];
+                        });
                     }
                     validShortcut = true;
                 }
@@ -241,39 +208,37 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                         break;
                     }
                     
-                    switch([kbHandler addKey:key]) {
-                        case -1:
-                            
+                    {
+                        int n = [kbHandler addKey:key];
+                        if (n <= 0) {
                             break;
-                            
-                        default:
-                        {
-                            x = kbHandler.kbBuffer+BACKSPACE_BUFFER-kbHandler.kbPLength;
-                            for (i = 0;i<kbHandler.kbBLength + kbHandler.kbPLength;i++,x++) {
-                                CGEventRef keyEventDown = CGEventCreateKeyboardEvent( NULL, 1, true);
-                                CGEventRef keyEventUp = CGEventCreateKeyboardEvent(NULL, 1, false);
-                                
-                                int flag = (int) CGEventGetFlags(keyEventDown);
-                                CGEventSetFlags(keyEventDown, NAKL_MAGIC_NUMBER | flag);
-                                
-                                flag = (int) CGEventGetFlags(keyEventUp);
-                                CGEventSetFlags(keyEventUp,NAKL_MAGIC_NUMBER | flag);
-                                if (*x == '\b') {
-                                    CGEventSetIntegerValueField(keyEventDown, kCGKeyboardEventKeycode, 0x33);
-                                    CGEventSetIntegerValueField(keyEventUp, kCGKeyboardEventKeycode, 0x33);
-                                } else {
-                                    CGEventKeyboardSetUnicodeString(keyEventDown, 1, x);
-                                    CGEventKeyboardSetUnicodeString(keyEventUp, 1, x);
-                                }
-                                
-                                CGEventTapPostEvent(proxy, keyEventDown);
-                                CGEventTapPostEvent(proxy, keyEventUp);
-                                
-                                CFRelease(keyEventDown);
-                                CFRelease(keyEventUp);
-                            }
-                            return NULL;
                         }
+                        const UniChar *buf = [kbHandler replayBuffer];
+                        for (int k = 0; k < n; k++) {
+                            UniChar ch = buf[k];
+                            CGEventRef keyEventDown = CGEventCreateKeyboardEvent(NULL, 1, true);
+                            CGEventRef keyEventUp   = CGEventCreateKeyboardEvent(NULL, 1, false);
+
+                            int eflag = (int)CGEventGetFlags(keyEventDown);
+                            CGEventSetFlags(keyEventDown, NAKL_MAGIC_NUMBER | eflag);
+                            eflag = (int)CGEventGetFlags(keyEventUp);
+                            CGEventSetFlags(keyEventUp,   NAKL_MAGIC_NUMBER | eflag);
+
+                            if (ch == '\b') {
+                                CGEventSetIntegerValueField(keyEventDown, kCGKeyboardEventKeycode, 0x33);
+                                CGEventSetIntegerValueField(keyEventUp,   kCGKeyboardEventKeycode, 0x33);
+                            } else {
+                                CGEventKeyboardSetUnicodeString(keyEventDown, 1, &ch);
+                                CGEventKeyboardSetUnicodeString(keyEventUp,   1, &ch);
+                            }
+
+                            CGEventTapPostEvent(proxy, keyEventDown);
+                            CGEventTapPostEvent(proxy, keyEventUp);
+
+                            CFRelease(keyEventDown);
+                            CFRelease(keyEventUp);
+                        }
+                        return NULL;
                     }
             }
             break;
@@ -303,7 +268,7 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
                  );
     
     eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, 0,
-                                eventMask, KeyHandler, self);
+                                eventMask, KeyHandler, (__bridge void *)self);
     if (!eventTap) {
         fprintf(stderr, "failed to create event tap\n");
         exit(1);
@@ -329,11 +294,11 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     switch (method) {
         case VKM_VNI:
         case VKM_TELEX:
-            [statusItem setImage:viStatusImage];
+            statusItem.button.image = viStatusImage;
             break;
-            
+
         default:
-            [statusItem setImage:enStatusImage];
+            statusItem.button.image = enStatusImage;
             break;
     }
 }
@@ -349,10 +314,10 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
 
 - (IBAction) methodSelected:(id)sender {
     for (id object in [statusMenu itemArray]) {
-        [(NSMenuItem*) object setState:NSOffState];
+        [(NSMenuItem*) object setState:NSControlStateValueOff];
     }
-    
-    [(NSMenuItem*) sender setState:NSOnState];
+
+    [(NSMenuItem*) sender setState:NSControlStateValueOn];
     
     int method;
     
@@ -385,11 +350,6 @@ CGEventRef KeyHandler(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     CFRunLoopRef rl = (CFRunLoopRef)CFRunLoopGetCurrent();
     CFRunLoopStop(rl);
     [NSApp terminate:self];
-}
-
-- (void)dealloc {
-    [preferencesController release];
-    [super dealloc];
 }
 
 @end
