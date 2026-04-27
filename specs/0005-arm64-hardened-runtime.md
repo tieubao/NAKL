@@ -78,3 +78,4 @@ killall NAKL || true
 ## Changelog
 
 - 2026-04-27: drafted and approved
+- 2026-04-27: implemented. `NAKL/NAKL.entitlements` created with `com.apple.security.automation.apple-events`. Target build settings: `CODE_SIGN_ENTITLEMENTS = NAKL/NAKL.entitlements` and `ENABLE_HARDENED_RUNTIME = YES` for both Debug and Release. `CODE_SIGN_IDENTITY = "-"` was already set in SPEC-0002. Verified: `flags=0x10002(adhoc,runtime)`, apple-events entitlement embedded, `codesign --verify` exit 0, `spctl` returns rejected (expected for ad-hoc; documents the gate to SPEC-0010 notarisation). Xcode also auto-injects `com.apple.security.get-task-allow=true` for ad-hoc builds; this is Apple's default for unsigned development builds and goes away under Developer ID signing.
