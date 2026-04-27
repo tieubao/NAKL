@@ -46,16 +46,15 @@
     [dialog setCanChooseFiles:YES];
     [dialog setAllowsMultipleSelection:YES];
     [dialog setCanChooseDirectories:NO];
-    [dialog setDirectory:@"/Applications"];
+    [dialog setDirectoryURL:[NSURL fileURLWithPath:@"/Applications"]];
 
-    if ([dialog runModal] == NSOKButton) {
-        NSArray* selectedPaths = [dialog filenames];
-        for (NSString* path in selectedPaths) {
-            NSDictionary* plistData = [NSDictionary dictionaryWithContentsOfFile:[path stringByAppendingString:@"/Contents/Info.plist"]];
-            NSString *appBundleIdentifier = [plistData valueForKeyPath:@"CFBundleIdentifier"];
-            NSString *appName = [plistData valueForKeyPath:@"CFBundleName"];
+    if ([dialog runModal] == NSModalResponseOK) {
+        for (NSURL *appURL in [dialog URLs]) {
+            NSBundle *appBundle = [NSBundle bundleWithURL:appURL];
+            NSString *appBundleIdentifier = appBundle.bundleIdentifier;
+            NSString *appName = appBundle.infoDictionary[(NSString *)kCFBundleNameKey];
             if ((appName == nil) || [appName isEqualToString:@""]) {
-                appName = [[path lastPathComponent] stringByDeletingPathExtension];
+                appName = appURL.URLByDeletingPathExtension.lastPathComponent;
             }
             if ((appBundleIdentifier != nil) && ![[AppData sharedAppData].excludedApps objectForKey:appBundleIdentifier]) {
                 [[AppData sharedAppData].excludedApps setObject:appName forKey:appBundleIdentifier];

@@ -50,6 +50,8 @@ Manual smoke checklist:
 
 ## Implementation notes
 
+Pre-10.13 fallback removal:
+
 | File | Lines (current) | Edit |
 |---|---|---|
 | `AppDelegate.m` | 40 | Delete `static bool frontmostAppApiCompatible = false;`. |
@@ -59,6 +61,17 @@ Manual smoke checklist:
 | `ExcludedAppsTableViewController.m` | 49 | `[dialog setDirectoryURL:[NSURL fileURLWithPath:@"/Applications"]];` |
 | `ExcludedAppsTableViewController.m` | 51 | `if ([dialog runModal] == NSModalResponseOK) {` |
 | `ExcludedAppsTableViewController.m` | 53-64 | Iterate `[dialog URLs]`. For each `NSURL *appURL`: `NSBundle *b = [NSBundle bundleWithURL:appURL]; NSString *bid = b.bundleIdentifier; NSString *name = b.infoDictionary[(NSString*)kCFBundleNameKey] ?: appURL.URLByDeletingPathExtension.lastPathComponent;` |
+
+NSStatusItem 10.14 deprecations (added during implementation; the original spec under-specified):
+
+| File | Lines (current) | Edit |
+|---|---|---|
+| `AppDelegate.m` | 100 | `statusItem.button.action = @selector(menuItemClicked);` (was `[statusItem setAction:...]`). |
+| `AppDelegate.m` | 101 | Delete `[statusItem setHighlightMode: YES]`. Modern button-based status items handle highlighting automatically when `setMenu:` is set. |
+| `AppDelegate.m` | 312, 316 | `statusItem.button.image = viStatusImage;` and `... = enStatusImage;` (was `setImage:`). |
+| `AppDelegate.m` | 332, 335 | `NSControlStateValueOff` / `NSControlStateValueOn` (was `NSOffState` / `NSOnState`). |
+
+`PreferencesController.m` carries 12 additional deprecations (`LSSharedFileList*`, `archivedDataWithRootObject:`, `NSOnState`) covering load-at-login behaviour. **Out of scope for SPEC-0003.** That code needs the SMAppService migration (macOS 13+) which is behavioural, not mechanical, and deserves its own spec.
 
 - The `(__bridge CFDictionaryRef)` cast is correct under both MRC (no-op) and ARC (zero-cost). It survives SPEC-0004.
 - Keep `scripts/EnableAssistiveDevices.applescript` untouched.
@@ -70,3 +83,4 @@ Manual smoke checklist:
 ## Changelog
 
 - 2026-04-27: drafted and approved
+- 2026-04-27: amended during implementation. Added NSStatusItem 10.14 deprecation cleanup (6 lines in `AppDelegate.m`) which was not enumerated in the original implementation table but is required to satisfy the "zero deprecations in our two files" acceptance criterion. `PreferencesController.m` deprecations (LSSharedFileList* and friends) explicitly deferred to a follow-up spec (login-item migration to SMAppService).
