@@ -1,6 +1,6 @@
 # SPEC-0004: Migrate app target to ARC
 
-**Status:** approved
+**Status:** done
 **Owner:** @tieubao
 **Depends on:** SPEC-0003
 **Blocks:** SPEC-0005, SPEC-0007
@@ -76,3 +76,5 @@ ARC migration has historically produced subtle release-timing bugs. Mitigations:
 
 - 2026-04-27: drafted and approved
 - 2026-04-27: implemented. ARC enabled at target level; 9 vendored files (`ShortcutRecorder/*.m`, `HotKey/PT*.m`) carry per-file `-fno-objc-arc`; all `release`/`retain`/`autorelease`/`super dealloc` calls removed from app sources; `CWLSynthesizeSingleton` macro replaced with `dispatch_once`; `assign` properties for objects switched to `weak` (IBOutlets) or `strong`; CF↔NS bridges added in `PreferencesController` LSSharedFileList code (`__bridge`, `__bridge_transfer`); `_window`, `_toggleHotKey`, `_switchMethodHotKey` ivars qualified `__weak` to match their properties; `unarchiveObjectWithFile:` migrated to `NSKeyedUnarchiver initForReadingFromData:` with `requiresSecureCoding=NO` to preserve the existing nested-archive file format. `CWLSynthesizeSingleton.h` no longer imported but file kept (zero impact, deletion is noise). Save-side `archivedDataWithRootObject:` deprecation warnings remain in `PreferencesController.saveSetting`; out of scope here, will land with the SMAppService login-item migration spec.
+
+- 2026-11-25: status flipped to done. Landed in 6d33759 (2026-04-27). On master, `CLANG_ENABLE_OBJC_ARC = YES` is set at target level, the vendored sources carry `-fno-objc-arc` in the project file, `NAKL/*.m` has no `retain`, `release`, `autorelease` or `[super dealloc]` calls, nothing imports `CWLSynthesizeSingleton.h` (the file is still in the tree), and `AppData` uses `dispatch_once`. The Instruments leak check and the manual smoke are not recorded here.

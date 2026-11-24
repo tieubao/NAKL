@@ -1,6 +1,6 @@
 # SPEC-0002: Build baseline (Xcode 16, macOS 12, Universal)
 
-**Status:** approved
+**Status:** done
 **Owner:** @tieubao
 **Depends on:** SPEC-0001
 **Blocks:** SPEC-0003
@@ -86,3 +86,5 @@ Two warnings discovered during baseline that are deliberately NOT fixed in this 
 
 - 2026-04-27: drafted and approved
 - 2026-04-27: amended during implementation. Added `Preferences.xib` to the file list (embedded deployment target needed bump for ibtool). Corrected test plan to use `generic/platform=macOS` (the original `platform=macOS` resolves to host arch only on Apple Silicon and produces a non-Universal binary).
+
+- 2026-11-25: status flipped to done. Landed in 6d33759 (2026-04-27). On master, `project.pbxproj` has `ARCHS = "$(ARCHS_STANDARD)"` and `ONLY_ACTIVE_ARCH` NO for Release, YES for Debug. The 12.0 deployment-target criterion was superseded by SPEC-0017 (now 14.0), and `Preferences.xib` was removed in the phase 9 SwiftUI shell. Build, `lipo` and the launch smoke were not re-run for this status flip.

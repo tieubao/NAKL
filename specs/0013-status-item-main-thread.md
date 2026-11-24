@@ -1,6 +1,6 @@
 # SPEC-0013: Status-item main-thread dispatch
 
-**Status:** approved
+**Status:** done
 **Owner:** @tieubao
 **Depends on:** SPEC-0002
 **Blocks:** none
@@ -95,3 +95,5 @@ None. The diff is small and the rationale is unambiguous.
 
 - 2026-04-27: drafted and approved
 - 2026-04-27: implemented as specified, no amendments. Both call-site clusters in `KeyHandler` (toggle path around `AppDelegate.m:155-159`, switch-method path around `AppDelegate.m:172-176`) wrapped in `dispatch_async(dispatch_get_main_queue(), ^{...})` with the `AppDelegate *` captured into a local before the block. Verified: source grep confirms both occurrences are inside dispatch blocks; `xcodebuild ... build` exits 0 with zero warnings sourced from `AppDelegate.m`. Manual Console smoke for the "no NSStatusItem warning" criterion is the user's to run on next launch.
+
+- 2026-11-25: status flipped to done. Landed in 6d33759 (2026-04-27). On master, both `KeyHandler` call-site clusters in `NAKL/AppDelegate.m` (around lines 149 and 166) run `updateCheckedItem` and `updateStatusItem` inside `dispatch_async(dispatch_get_main_queue(), ...)`. The Console smoke stays the owner's run and is not recorded here.

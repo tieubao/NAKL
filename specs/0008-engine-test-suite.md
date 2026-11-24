@@ -1,6 +1,6 @@
 # SPEC-0008: XCTest target with golden corpus
 
-**Status:** approved
+**Status:** done
 **Owner:** @tieubao
 **Depends on:** SPEC-0007
 **Blocks:** SPEC-0009
@@ -147,3 +147,5 @@ Reuse public-domain prose only; do not include copyrighted text.
 
   - **Add a fuzz target?** Deferred. The current corpora exercise the algorithm's main branches; a 10K random-ASCII fuzz would be useful for SPEC-0009 (IMK rewrite) where engine reuse needs maximum confidence. Tracking as a follow-up rather than expanding this spec.
   - **Smoke-test the Obj-C wrapper?** Done via `PassthroughTests.testWrapperAgrees`, with the caveat noted in amendment 1 (we can't link the host's `KeyboardHandler` from a hostless bundle, so the smoke is engine-equivalence rather than wrapper-as-such; the wrapper is verifiably forward-only by inspection of `KeyboardHandler.m`).
+
+- 2026-11-25: status flipped to done. Landed in 6d33759 (2026-04-27). On master, the `NAKLEngineTests` target is in `project.pbxproj`, `TelexGoldenTests.m`, `VniGoldenTests.m` and `PassthroughTests.m` exist, and the three corpora are in `tests/EngineTests/fixtures/`. The 205, 82 and 12 case pass counts come from the implementation entry above; the suite was not re-run for this status flip.

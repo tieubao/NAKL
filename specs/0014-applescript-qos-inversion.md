@@ -1,6 +1,6 @@
 # SPEC-0014: Replace launch-time AppleScript with native Cocoa AX prompt
 
-**Status:** approved
+**Status:** done
 **Owner:** @tieubao
 **Depends on:** SPEC-0012
 **Blocks:** none
@@ -122,3 +122,5 @@ Manual smoke (permission-granted path):
 - 2026-04-27: drafted
 - 2026-04-27: approved by @tieubao
 - 2026-04-27: implemented as specified, no amendments. `+[AppDelegate initialize]` (`NAKL/AppDelegate.m:43-66`) replaces the AppleScript path with an `NSAlert` + `[NSWorkspace openURL:]` flow. Project file no longer references `EnableAssistiveDevices.scpt` for bundle copy (PBXBuildFile, CopyFiles `files` entry, PBXFileReference, and root-group child entry all removed). The `osacompile` `ShellScript` phase and the empty `CopyFiles` phase are intentionally left in place per spec scope. Verified: AC1, AC2, AC3, AC6 pass via grep + `xcodebuild` + bundle inspection. AC4, AC5 are user-driven Xcode smoke tests.
+
+- 2026-11-25: status flipped to done. Landed in 6d33759 (2026-04-27). On master, `+[AppDelegate initialize]` uses an `NSAlert` and opens the `x-apple.systempreferences` Accessibility URL, no source references `NSAppleScript` or `executeAndReturnError:`, and `project.pbxproj` no longer copies `EnableAssistiveDevices.scpt` into the bundle (the `osacompile` phase stays, per the spec). The two Xcode smoke tests stay the owner's run and are not recorded here.

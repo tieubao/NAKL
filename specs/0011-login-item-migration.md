@@ -1,6 +1,6 @@
 # SPEC-0011: SMAppService login-item migration
 
-**Status:** approved
+**Status:** done
 **Owner:** @tieubao
 **Depends on:** SPEC-0004
 **Blocks:** none (but recommended before SPEC-0007 to keep `PreferencesController.m` clean)
@@ -126,3 +126,5 @@ Resolved at approval:
   - **B1 amendment**: the criterion's grep `archivedDataWithRootObject:[^r]` matches the new multi-line method invocation (because the regex evaluates against the first line where `[` follows the colon, not `r`). The authoritative check is the cross-cutting "PreferencesController.m deprecation count = 0", which passes. Future revisions of this spec should use `git grep -nE "archivedDataWithRootObject:\\s*\\[" -- NAKL/PreferencesController.m` to specifically detect the legacy single-arg form, or rely entirely on the deprecation count.
   - **Skipped (per resolved open question)**: no programmatic cleanup of any leftover `LSSharedFileList` entry; users with a stale entry from very old NAKL builds can remove it manually via System Settings → General → Login Items.
   - All automatable verifications pass. Manual SMAppService toggle + reboot smoke (cross-cutting last item) is the user's to run.
+
+- 2026-11-25: status flipped to done. Landed in 6d33759 (2026-04-27). On master, no source uses `LSSharedFileList` or `NSOnState`, `ServiceManagement.framework` is linked, and login-item registration goes through `SMAppService.mainApp` in `NAKL/Settings/GeneralSettingsView.swift` (moved there by the phase 9 SwiftUI shell, which also replaced `PreferencesController.m`). The reboot smoke stays the owner's run and is not recorded here.
