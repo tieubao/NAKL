@@ -1,6 +1,6 @@
 # SPEC-0001: Modernisation roadmap
 
-**Status:** approved
+**Status:** done
 **Owner:** @tieubao
 **Depends on:** none
 **Blocks:** SPEC-0002 through SPEC-0010
@@ -82,3 +82,5 @@ This spec is not directly testable; its acceptance criteria are met when the dep
 - 2026-04-27: drafted
 - 2026-04-27: approved (SPEC-0002 through SPEC-0008 drafted and approved; SPEC-0009 drafted at `draft`; ADR-0001 written)
 - 2026-04-27: Phase 9 added per SPEC-0015 (redistribution + UI v2). The "UI redesign" and "Switching language. Objective-C stays; no Swift mixing yet" non-goals listed above are formally retired by SPEC-0015. Phases 0-8 remain authoritative history; this entry is an amendment, not a supersession.
+
+- 2026-11-25: status flipped to done. Roadmap acceptance met: specs 0002 to 0008 exist and were approved, SPEC-0009 sits at `draft`, ADR-0001 is written and linked, and SPEC-0007 enumerates the globals to remove. Committed phases 0 to 6 landed in 6d33759 (2026-04-27). Phase 7 (SPEC-0009) stays `draft` and phase 8 (SPEC-0010) has only its pipeline script, so those two are not covered by this status.

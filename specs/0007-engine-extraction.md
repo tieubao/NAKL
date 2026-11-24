@@ -1,6 +1,6 @@
 # SPEC-0007: Extract Vietnamese transformation engine into pure module
 
-**Status:** approved
+**Status:** done
 **Owner:** @tieubao
 **Depends on:** SPEC-0004
 **Blocks:** SPEC-0008, SPEC-0009
@@ -177,3 +177,5 @@ The highest-risk spec in the roadmap. The transformation algorithm is dense and 
   **What the user owns**
 
   Manual smoke per the SPEC-0003 test plan: launch the built `NAKL.app`, set Telex, type real Vietnamese into TextEdit (e.g. `nguoiwf vietnam`, `xin chaof`), confirm output identical to pre-extraction behaviour. Toggle to VNI; same. Switch off; pass-through is verbatim.
+
+- 2026-11-25: status flipped to done. Landed in 6d33759 (2026-04-27). On master, `NAKL/Engine/nakl_engine.{h,c}` exist, the `.c` file has no AppKit, Foundation or Objective-C symbols outside comments, and `KeyboardHandler.m` is a 113-line forwarding wrapper. The manual typing smoke in TextEdit stays the owner's run and is not recorded here.

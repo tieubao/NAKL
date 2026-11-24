@@ -1,6 +1,6 @@
 # SPEC-0006: Modern app icon and asset catalog
 
-**Status:** approved
+**Status:** done
 **Owner:** @tieubao
 **Depends on:** SPEC-0005
 **Blocks:** SPEC-0010
@@ -70,3 +70,5 @@ killall NAKL || true
   2. **Status-bar icons are NOT template images.** The original colour scheme (red glyph for VI, blue for EN) is the state distinction. Template images discard colour; making them templates would collapse the EN/VI visual distinction. Shipped as standard imagesets at 18@1x and 36@2x derived from `icon24.png` and `icon_blue_24.png` via `sips`. Dark-mode adaptation is intentionally deferred to a follow-up that needs design input (either redraw monochrome glyphs that distinguish via shape, or accept the colour-on-dark-mode look).
   3. **Loose PNGs and `NAKL.icns` left in tree.** Removing them requires editing 19 line-groups across `project.pbxproj` (PBXBuildFile / PBXFileReference / PBXGroup / PBXResourcesBuildPhase). Each is mechanical but the cumulative risk is meaningful for a spec already at amendment level. They are dead bundle weight (~250 KB) but not breaking. Recommend a follow-up "asset catalog cleanup" spec that does this surgery, or open the project in Xcode and delete the four files via the file inspector (1 minute).
 - Verified: build exits 0; Universal binary; `assetutil` lists `AppIcon`, `StatusBarVI`, `StatusBarEN`; codesign verifies; the new imageset names resolve via `[NSImage imageNamed:]` in `AppDelegate.awakeFromNib`.
+
+- 2026-11-25: status flipped to done. Landed in 6d33759 (2026-04-27). On master, `Images.xcassets` holds `AppIcon`, `StatusBarVI` and `StatusBarEN`, `Images-2.xcassets` is gone, the legacy icon files live in `assets/source/`, and `AppDelegate.m` loads the status images through `imageNamed:`. The template-image criterion stays waived per the amendment above. The Finder, Dock and menu-bar visual smoke is not recorded here.

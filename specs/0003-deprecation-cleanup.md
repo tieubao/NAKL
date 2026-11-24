@@ -1,6 +1,6 @@
 # SPEC-0003: Deprecation cleanup in app sources
 
-**Status:** approved
+**Status:** done
 **Owner:** @tieubao
 **Depends on:** SPEC-0002
 **Blocks:** SPEC-0004
@@ -84,3 +84,5 @@ NSStatusItem 10.14 deprecations (added during implementation; the original spec 
 
 - 2026-04-27: drafted and approved
 - 2026-04-27: amended during implementation. Added NSStatusItem 10.14 deprecation cleanup (6 lines in `AppDelegate.m`) which was not enumerated in the original implementation table but is required to satisfy the "zero deprecations in our two files" acceptance criterion. `PreferencesController.m` deprecations (LSSharedFileList* and friends) explicitly deferred to a follow-up spec (login-item migration to SMAppService).
+
+- 2026-11-25: status flipped to done. Landed in 6d33759 (2026-04-27). On master, `NAKL/*.m` has no `frontmostAppApiCompatible`, `NSAppKitVersionNumber10_7`, `AXAPIEnabled`, `activeApplication`, `NSOKButton` or `setDirectory:`, and `AppDelegate.m` uses `frontmostApplication` and `AXIsProcessTrustedWithOptions`. The `ExcludedAppsTableViewController` and `PreferencesController` criteria are moot since the phase 9 SwiftUI shell replaced those files. The manual smoke checklist stays the owner's run and is not recorded here.

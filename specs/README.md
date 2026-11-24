@@ -34,20 +34,20 @@ Architectural decisions live in `/adr/`, not here. ADRs are write-once; supersed
 
 | # | Title | Status | Owner |
 |---|---|---|---|
-| [0001](0001-modernisation-roadmap.md) | Modernisation roadmap | approved | @tieubao |
-| [0002](0002-build-baseline.md) | Build baseline (Xcode 16, macOS 12) | approved | @tieubao |
-| [0003](0003-deprecation-cleanup.md) | Deprecation cleanup | approved | @tieubao |
-| [0004](0004-arc-migration.md) | ARC migration | approved | @tieubao |
-| [0005](0005-arm64-hardened-runtime.md) | arm64 + Hardened Runtime | approved | @tieubao |
-| [0006](0006-asset-catalog.md) | Asset catalog refresh | approved | @tieubao |
-| [0007](0007-engine-extraction.md) | Vietnamese engine extraction | approved | @tieubao |
-| [0008](0008-engine-test-suite.md) | Engine test suite | approved | @tieubao |
+| [0001](0001-modernisation-roadmap.md) | Modernisation roadmap | done (6d33759) | @tieubao |
+| [0002](0002-build-baseline.md) | Build baseline (Xcode 16, macOS 12) | done (6d33759) | @tieubao |
+| [0003](0003-deprecation-cleanup.md) | Deprecation cleanup | done (6d33759) | @tieubao |
+| [0004](0004-arc-migration.md) | ARC migration | done (6d33759) | @tieubao |
+| [0005](0005-arm64-hardened-runtime.md) | arm64 + Hardened Runtime | done (6d33759) | @tieubao |
+| [0006](0006-asset-catalog.md) | Asset catalog refresh | done (6d33759) | @tieubao |
+| [0007](0007-engine-extraction.md) | Vietnamese engine extraction | done (6d33759) | @tieubao |
+| [0008](0008-engine-test-suite.md) | Engine test suite | done (6d33759) | @tieubao |
 | [0009](0009-imk-input-method.md) | IMK input method | draft (refined; awaits user go) | @tieubao |
 | [0010](0010-notarisation.md) | Notarisation pipeline | approved | @tieubao |
-| [0011](0011-login-item-migration.md) | SMAppService login-item migration | approved | @tieubao |
-| [0012](0012-asset-bundle-cleanup.md) | Bundle cleanup + EnableAssistiveDevices script | approved | @tieubao |
-| [0013](0013-status-item-main-thread.md) | Status-item main-thread dispatch | approved | @tieubao |
-| [0014](0014-applescript-qos-inversion.md) | AppleScript launch QoS inversion fix | approved | @tieubao |
+| [0011](0011-login-item-migration.md) | SMAppService login-item migration | done (6d33759) | @tieubao |
+| [0012](0012-asset-bundle-cleanup.md) | Bundle cleanup + EnableAssistiveDevices script | done (6d33759) | @tieubao |
+| [0013](0013-status-item-main-thread.md) | Status-item main-thread dispatch | done (6d33759) | @tieubao |
+| [0014](0014-applescript-qos-inversion.md) | AppleScript launch QoS inversion fix | done (6d33759) | @tieubao |
 | [0015](0015-redistribution-ui-v2-roadmap.md) | Phase 9 roadmap: redistribution + UI v2 | done | @tieubao |
 | [0016](0016-product-rebrand.md) | Product rebrand (Monke, foundation.d.Monke) | done | @tieubao |
 | [0017](0017-swiftui-shell.md) | SwiftUI Preferences shell + macOS 14 deployment | done | @tieubao |

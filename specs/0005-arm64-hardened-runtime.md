@@ -1,6 +1,6 @@
 # SPEC-0005: Hardened Runtime and local code signing
 
-**Status:** approved
+**Status:** done
 **Owner:** @tieubao
 **Depends on:** SPEC-0004
 **Blocks:** SPEC-0010
@@ -79,3 +79,5 @@ killall NAKL || true
 
 - 2026-04-27: drafted and approved
 - 2026-04-27: implemented. `NAKL/NAKL.entitlements` created with `com.apple.security.automation.apple-events`. Target build settings: `CODE_SIGN_ENTITLEMENTS = NAKL/NAKL.entitlements` and `ENABLE_HARDENED_RUNTIME = YES` for both Debug and Release. `CODE_SIGN_IDENTITY = "-"` was already set in SPEC-0002. Verified: `flags=0x10002(adhoc,runtime)`, apple-events entitlement embedded, `codesign --verify` exit 0, `spctl` returns rejected (expected for ad-hoc; documents the gate to SPEC-0010 notarisation). Xcode also auto-injects `com.apple.security.get-task-allow=true` for ad-hoc builds; this is Apple's default for unsigned development builds and goes away under Developer ID signing.
+
+- 2026-11-25: status flipped to done. Landed in 6d33759 (2026-04-27). On master, `NAKL/NAKL.entitlements` holds the apple-events key, and `project.pbxproj` sets `CODE_SIGN_ENTITLEMENTS`, `ENABLE_HARDENED_RUNTIME = YES` and `CODE_SIGN_IDENTITY = "-"`. The `codesign`, `spctl` and arm64 launch checks were verified at implementation time (see the entry above) and not re-run for this status flip.
