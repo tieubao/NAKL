@@ -5,6 +5,8 @@
 **Depends on:** SPEC-0007, SPEC-0008, SPEC-0010 (signing)
 **Blocks:** none
 
+> **Ruled 2026-11-25 under the owner's delegation: stays deferred.** ADR-0001 chose option C and left IMK deferred, and no doc recommends a go. Test plan B needs a person who types on a real Mac. Han only: say go, then run test plan B by hand. Before any go, this spec needs a pass for the Monke rename (it still uses the old bundle names).
+
 > ⚠️ Status remains `draft` because the **execute/no-execute decision is yours per ADR-0001**. This refinement locks all open questions and proposes a phased execution plan so the spec is implementation-ready when you approve. ADR-0001's reopen evaluation is appended at the bottom of this spec.
 
 ## Problem
