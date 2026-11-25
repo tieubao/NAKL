@@ -42,7 +42,7 @@ Architectural decisions live in `/adr/`, not here. ADRs are write-once; supersed
 | [0006](0006-asset-catalog.md) | Asset catalog refresh | done (6d33759) | @tieubao |
 | [0007](0007-engine-extraction.md) | Vietnamese engine extraction | done (6d33759) | @tieubao |
 | [0008](0008-engine-test-suite.md) | Engine test suite | done (6d33759) | @tieubao |
-| [0009](0009-imk-input-method.md) | IMK input method | draft (refined; awaits user go) | @tieubao |
+| [0009](0009-imk-input-method.md) | IMK input method | draft (deferred per ADR-0001; ruled 2026-11-25, awaits user go) | @tieubao |
 | [0010](0010-notarisation.md) | Notarisation pipeline | approved | @tieubao |
 | [0011](0011-login-item-migration.md) | SMAppService login-item migration | done (6d33759) | @tieubao |
 | [0012](0012-asset-bundle-cleanup.md) | Bundle cleanup + EnableAssistiveDevices script | done (6d33759) | @tieubao |

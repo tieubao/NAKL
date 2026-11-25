@@ -5,6 +5,8 @@
 **Depends on:** SPEC-0017
 **Blocks:** none
 
+> **2026-11-25, re-triage under the owner's delegation: stays draft.** No doc recommends go or no-go, and the manual smoke needs a person who types on a real Mac with Accessibility granted. Han only: say go. An agent can then build it; Han runs the manual smoke.
+
 ## Problem
 
 SPEC-0017 deferred Group B (`MenuBarExtra`) and shipped a SwiftUI Preferences window hosted inside the legacy ObjC AppDelegate + MainMenu.xib. The menu-bar status item, the Off/VNI/Telex menu, the `+[AppDelegate initialize]` AX-permission flow, the CGEventTap event loop, and the hotkey comparison inside `KeyHandler` all still run from `main.m → NSApplicationMain → MainMenu.xib → AppDelegate`.

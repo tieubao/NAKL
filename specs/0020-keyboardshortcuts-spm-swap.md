@@ -5,6 +5,8 @@
 **Depends on:** SPEC-0017, SPEC-0019
 **Blocks:** none
 
+> **2026-11-25, re-triage under the owner's delegation: stays draft.** No doc recommends go or no-go, and the manual smoke needs a person who types on a real Mac with Accessibility granted. Han only: say go. An agent can then build it; Han runs the manual smoke.
+
 ## Problem
 
 SPEC-0017 deferred Group D: `ShortcutRecorder/` (10 files) and `HotKey/PT*` (8 files) remain in the build because two production code paths still consume them:
